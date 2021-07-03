@@ -1,0 +1,100 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="pYJF0=b+7#-N1S_FY-u[" x="113" y="38">
+    <field name="name">light_control</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="K?qy=yGSZ-H|KHaK3qh/">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="I6r|D:a=x#]yAzdFh!g)">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="output" id="a6EidnZ@lNtXw~h|b7_e">
+                <statement name="output">
+                  <block type="output_pcf8574_component" id="p}0fZsR}qS4]!)Hu:Sw]">
+                    <field name="pcf8574_id">pcf8574_0x22</field>
+                    <field name="pin_number">5</field>
+                    <field name="inverted">false</field>
+                    <field name="output_id">output_1</field>
+                  </block>
+                </statement>
+                <next>
+                  <block type="light" id="lKN32YD+TZ2dD@`afR9l">
+                    <statement name="light">
+                      <block type="light_component" id="#bQP,WyCo.i%^k3n=g0L">
+                        <field name="input_name">Light</field>
+                        <field name="output_id">output_1</field>
+                        <field name="component_id">light_1</field>
+                        <field name="restore_mode">FALSE</field>
+                        <field name="restore_mode_list">always off</field>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="binary_sensor" id="Juj?!i5tsoHwd]L4Dodm">
+                        <statement name="binary_sensor">
+                          <block type="binary_sensor_pcf8574_component" id="#,4/~sX8L4laF:hwSf19">
+                            <field name="input_name">Binary Sensor</field>
+                            <field name="binary_sensor_id">binary_sensor1</field>
+                            <field name="pcf8574_id">pcf8574_0x20</field>
+                            <field name="pin_number">4</field>
+                            <field name="inverted">True</field>
+                            <value name="automation_field">
+                              <block type="binary_sensor_automation" id="1B+=dV,i07$~L#`pw;Pb">
+                                <statement name="automation_field_on_press">
+                                  <block type="actions" id="[!,5uKbznauHYC@`EdU3">
+                                    <field name="action_list">light.turn_on</field>
+                                    <field name="id">light_1</field>
+                                  </block>
+                                </statement>
+                                <statement name="automation_field_on_release">
+                                  <block type="actions" id="yxzFNFY20`7!GEzM78._">
+                                    <field name="action_list">light.turn_off</field>
+                                    <field name="id">light_1</field>
+                                  </block>
+                                </statement>
+                              </block>
+                            </value>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="i2c" id="pnLV.|c)($AxePSZrRj9">
+                            <field name="sda_pin">13</field>
+                            <field name="scl_pin">16</field>
+                            <field name="scan">True</field>
+                            <field name="id">i2c_bus</field>
+                            <next>
+                              <block type="pcf8574" id="{RESQAe~$cOUpQdi!g#}">
+                                <field name="0x20">TRUE</field>
+                                <field name="0x20_id">pcf8574_0x20</field>
+                                <field name="0x21">FALSE</field>
+                                <field name="0x21_id">pcf8574_0x21</field>
+                                <field name="0x22">TRUE</field>
+                                <field name="0x22_id">pcf8574_0x22</field>
+                                <field name="0x23">FALSE</field>
+                                <field name="0x23_id">pcf8574_0x23</field>
+                                <field name="0x24">FALSE</field>
+                                <field name="0x24_id">pcf8574_0x24</field>
+                                <field name="0x25">FALSE</field>
+                                <field name="0x25_id">pcf8574_0x25</field>
+                                <field name="0x26">FALSE</field>
+                                <field name="0x26_id">pcf8574_0x26</field>
+                                <field name="0x27">FALSE</field>
+                                <field name="0x27_id">pcf8574_0x27</field>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

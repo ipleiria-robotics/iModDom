@@ -1,0 +1,165 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="pYJF0=b+7#-N1S_FY-u[" x="88" y="-337">
+    <field name="name">cover_control</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="K?qy=yGSZ-H|KHaK3qh/">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="/davuY//wodmK+iDI-gF">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="cover" id="Q*llfk|P/++`89/-emD,">
+                <statement name="cover">
+                  <block type="cover_component" id="xyiVwY6flUBFvgoO83g6">
+                    <field name="input_name">Cover</field>
+                    <field name="component_id">cover_1</field>
+                    <field name="open_duration">5</field>
+                    <field name="close_duration">5</field>
+                    <statement name="open_action">
+                      <block type="cover_actions" id="4]+G@jo+0*=dp7G479UF">
+                        <field name="action_list">switch.turn_on</field>
+                        <field name="switch_id">cover_open</field>
+                      </block>
+                    </statement>
+                    <statement name="close_action">
+                      <block type="cover_actions" id="d!rNV8GBnbo8Cc?[^Hwt">
+                        <field name="action_list">switch.turn_on</field>
+                        <field name="switch_id">cover_close</field>
+                      </block>
+                    </statement>
+                    <statement name="Stop_action">
+                      <block type="cover_actions" id="P1Tb0Y?YoK;|JqX=tOWr">
+                        <field name="action_list">switch.turn_off</field>
+                        <field name="switch_id">cover_open</field>
+                        <next>
+                          <block type="cover_actions" id="[I27oOVNap*)LVizez^v">
+                            <field name="action_list">switch.turn_off</field>
+                            <field name="switch_id">cover_close</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                  </block>
+                </statement>
+                <next>
+                  <block type="switch" id="+Oqs{GsNxK:#Zq.+A)2f">
+                    <statement name="switch_inputs">
+                      <block type="switch_component" id="2zZcG`JIa;$AWANn0(U]">
+                        <field name="switch_name">Open Cover</field>
+                        <field name="esp_pin">1</field>
+                        <field name="inverted">true</field>
+                        <field name="output_id">cover_open</field>
+                        <field name="interlock_check">TRUE</field>
+                        <field name="interlock_name">interlock_1</field>
+                        <field name="output_id1">cover_open</field>
+                        <field name="output_id2">cover_close</field>
+                        <field name="restore_mode">FALSE</field>
+                        <field name="restore_mode_list">always_off</field>
+                        <next>
+                          <block type="switch_component" id="ARCG3q~6tKanS^?CS:XU">
+                            <field name="switch_name">Close Cover</field>
+                            <field name="esp_pin">2</field>
+                            <field name="inverted">true</field>
+                            <field name="output_id">cover_close</field>
+                            <field name="interlock_check">TRUE</field>
+                            <field name="interlock_name">interlock_2</field>
+                            <field name="output_id1">cover_open</field>
+                            <field name="output_id2">cover_close</field>
+                            <field name="restore_mode">FALSE</field>
+                            <field name="restore_mode_list">always_off</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="binary_sensor" id="U#SNwd_~nx8Ja|.e`#xq">
+                        <statement name="binary_sensor">
+                          <block type="binary_sensor_component" id="~oD+/T4hVpFwagy29SCM">
+                            <field name="input_name">Open Cover</field>
+                            <field name="binary_sensor_id">open_cover</field>
+                            <field name="esp_pin">3</field>
+                            <field name="mode">INPUT_PULLUP</field>
+                            <field name="inverted">True</field>
+                            <value name="automation_field">
+                              <block type="binary_sensor_automation" id="_DSF943.F?AD}F3acvSW">
+                                <statement name="automation_field_on_click">
+                                  <block type="on_click_component" id="}?eXTyYnSgC@Zi%V1/*w">
+                                    <field name="min_length">0</field>
+                                    <field name="max_length">0.5</field>
+                                    <statement name="on_click_action">
+                                      <block type="actions" id="P-e|jy6_y2smvd7QaHBe">
+                                        <field name="action_list">cover.open</field>
+                                        <field name="id">cover_1</field>
+                                      </block>
+                                    </statement>
+                                  </block>
+                                </statement>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="binary_sensor_component" id="qkO/ANMHXM:H:[P^L]$?">
+                                <field name="input_name">Stop Cover</field>
+                                <field name="binary_sensor_id">stop_cover</field>
+                                <field name="esp_pin">4</field>
+                                <field name="mode">INPUT_PULLUP</field>
+                                <field name="inverted">True</field>
+                                <value name="automation_field">
+                                  <block type="binary_sensor_automation" id="A^@Dt^7LEFPBYM^EgV}y">
+                                    <statement name="automation_field_on_click">
+                                      <block type="on_click_component" id="L,BLa0(ZVBQwE^S-lrbf">
+                                        <field name="min_length">0</field>
+                                        <field name="max_length">0.5</field>
+                                        <statement name="on_click_action">
+                                          <block type="actions" id="YFy[siF$m(f7KtVzXn9X">
+                                            <field name="action_list">cover.stop</field>
+                                            <field name="id">cover_1</field>
+                                          </block>
+                                        </statement>
+                                      </block>
+                                    </statement>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="binary_sensor_component" id="I`z*,H`gS8N:*=xQqQh{">
+                                    <field name="input_name">Close Cover</field>
+                                    <field name="binary_sensor_id">close_cover</field>
+                                    <field name="esp_pin">5</field>
+                                    <field name="mode">INPUT_PULLUP</field>
+                                    <field name="inverted">True</field>
+                                    <value name="automation_field">
+                                      <block type="binary_sensor_automation" id="@GH3O}SwvEfH)d:}40=U">
+                                        <statement name="automation_field_on_click">
+                                          <block type="on_click_component" id="Fs5w)@#o,t*I%]wbkO30">
+                                            <field name="min_length">0</field>
+                                            <field name="max_length">0.5</field>
+                                            <statement name="on_click_action">
+                                              <block type="actions" id="16_]?(_WSjR$MvX9!aAx">
+                                                <field name="action_list">cover.close</field>
+                                                <field name="id">cover_1</field>
+                                              </block>
+                                            </statement>
+                                          </block>
+                                        </statement>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

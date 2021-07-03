@@ -1,0 +1,86 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="pYJF0=b+7#-N1S_FY-u[" x="88" y="-337">
+    <field name="name">cover_control</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="K?qy=yGSZ-H|KHaK3qh/">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="b.$-,A4Y{^jEQfb|!C]x">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="cover" id="Q*llfk|P/++`89/-emD,">
+                <statement name="cover">
+                  <block type="cover_component" id="xyiVwY6flUBFvgoO83g6">
+                    <field name="input_name">Cover</field>
+                    <field name="component_id">cover_1</field>
+                    <field name="open_duration">5</field>
+                    <field name="close_duration">5</field>
+                    <statement name="open_action">
+                      <block type="cover_actions" id="4]+G@jo+0*=dp7G479UF">
+                        <field name="action_list">switch.turn_on</field>
+                        <field name="switch_id">cover_open</field>
+                      </block>
+                    </statement>
+                    <statement name="close_action">
+                      <block type="cover_actions" id="d!rNV8GBnbo8Cc?[^Hwt">
+                        <field name="action_list">switch.turn_on</field>
+                        <field name="switch_id">cover_close</field>
+                      </block>
+                    </statement>
+                    <statement name="Stop_action">
+                      <block type="cover_actions" id="P1Tb0Y?YoK;|JqX=tOWr">
+                        <field name="action_list">switch.turn_off</field>
+                        <field name="switch_id">cover_open</field>
+                        <next>
+                          <block type="cover_actions" id="[I27oOVNap*)LVizez^v">
+                            <field name="action_list">switch.turn_off</field>
+                            <field name="switch_id">cover_close</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                  </block>
+                </statement>
+                <next>
+                  <block type="switch" id="+Oqs{GsNxK:#Zq.+A)2f">
+                    <statement name="switch_inputs">
+                      <block type="switch_component" id="2zZcG`JIa;$AWANn0(U]">
+                        <field name="switch_name">Open Cover</field>
+                        <field name="esp_pin">1</field>
+                        <field name="inverted">true</field>
+                        <field name="output_id">cover_open</field>
+                        <field name="interlock_check">TRUE</field>
+                        <field name="interlock_name">interlock_1</field>
+                        <field name="output_id1">cover_open</field>
+                        <field name="output_id2">cover_close</field>
+                        <field name="restore_mode">FALSE</field>
+                        <field name="restore_mode_list">always_off</field>
+                        <next>
+                          <block type="switch_component" id="ARCG3q~6tKanS^?CS:XU">
+                            <field name="switch_name">Close Cover</field>
+                            <field name="esp_pin">2</field>
+                            <field name="inverted">true</field>
+                            <field name="output_id">cover_close</field>
+                            <field name="interlock_check">TRUE</field>
+                            <field name="interlock_name">interlock_2</field>
+                            <field name="output_id1">cover_open</field>
+                            <field name="output_id2">cover_close</field>
+                            <field name="restore_mode">FALSE</field>
+                            <field name="restore_mode_list">always_off</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

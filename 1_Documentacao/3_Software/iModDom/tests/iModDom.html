@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>iModDom Playground</title>
+<script src="../blockly_uncompressed.js"></script>
+<script src="../generators/javascript.js"></script>
+<script src="../generators/iModDom.js"></script>
+<script src="../blocks/iModDom.js"></script>
+
+<meta name="google" value="notranslate">
+<meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+
+<script src="../node_modules/@blockly/block-test/dist/index.js"></script>
+
+<script>
+'use strict';
+var workspace = null;
+
+function start() {
+  setBackgroundColour();
+  // Parse the URL arguments.
+  var match = 'ltr'
+  var rtl = match && match[1] == 'rtl';
+  var autoimport = 'ltr'
+  // Create main workspace.
+  workspace = Blockly.inject('blocklyDiv',
+      {
+        comments: true,
+        collapse: true,
+        disable: true,
+        grid:
+          {
+            spacing: 25,
+            length: 3,
+            colour: '#ccc',
+            snap: true
+          },
+        horizontalLayout: false,
+        maxBlocks: Infinity,
+        maxInstances: {'test_basic_limit_instances': 3},
+        maxTrashcanContents: 256,
+        media: '../media/',
+        oneBasedIndex: true,
+        readOnly: false,
+        rtl: rtl,
+        move: {
+          scrollbars: true,
+          drag: true,
+          wheel: true,
+        },
+        toolbox: toolbox,
+        toolboxPosition: 'start',
+        renderer: 'geras',
+        zoom:
+          {
+            controls: true,
+            wheel: false,
+            startScale: 1.0,
+            maxScale: 4,
+            minScale: 0.25,
+            scaleSpeed: 1.1
+          }
+      });
+  workspace.configureContextMenu = configureContextMenu;
+  // Restore previously displayed text.
+  if (sessionStorage) {
+    var text = sessionStorage.getItem('textarea');
+    if (text) {
+      document.getElementById('importExport').value = text;
+    }
+    // Restore event logging state.
+    var logMainEventsState = sessionStorage.getItem('logEvents');
+    logEvents(Boolean(Number(logMainEventsState)));
+    var logToolboxFlyoutEventsState = sessionStorage.getItem('logFlyoutEvents');
+    logFlyoutEvents(Boolean(Number(logToolboxFlyoutEventsState)));
+  } else {
+    // MSIE 11 does not support sessionStorage on file:// URLs.
+    logEvents(false);
+  }
+  if (autoimport) {
+    fromXml();
+  }
+}
+
+function setBackgroundColour() {
+  // Set background colour to differentiate server vs local copy.
+  if (location.protocol == 'file:') {
+    var lilac = '#d6d6ff';
+    document.body.style.backgroundColor = lilac;
+  }
+}
+
+function toCode(lang) {
+  if (Blockly[lang].workspaceToCode(workspace).value == ''){
+    alert("There is nothing to save");
+  }
+  else{
+  var output = document.getElementById('importExport');
+  output.value = Blockly[lang].workspaceToCode(workspace);
+  }
+}
+
+ 
+function saveTextAsFile()
+ {
+  var textToSave = document.getElementById("importExport").value;
+  var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+  var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+  if (document.getElementById("importExport").value == ''){
+    alert("There is nothing to save!");
+  }
+  else{
+    var Filename= prompt("Choose a name for your yaml file", "example1");
+    if (Filename == null) {
+    alert("You canceled the download!");
+      }
+      else {
+        if (Filename == '') {
+        alert("Please choose a name for your yaml file!");
+        }
+        else{
+        var downloadLink = document.createElement("a");
+        downloadLink.download = Filename + ".yaml";
+        downloadLink.innerHTML = "Download File";
+        downloadLink.href = textToSaveAsURL;
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+       }
+      }
+  }
+ }
+  
+ function destroyClickedElement(event)
+ {
+     document.body.removeChild(event.target);
+}
+
+//COPY BUTTON
+function copyText() {
+  var copyText = document.getElementById("importExport");
+  if (document.getElementById("importExport").value == ''){
+    alert("There is nothing to copy");
+ }
+  else{
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  alert("The code was copied successfully");
+}
+}
+function toXml()
+ {
+  var output = document.getElementById('importExport');
+  var xml = Blockly.Xml.workspaceToDom(workspace);
+  output.value = Blockly.Xml.domToPrettyText(xml);
+  var textToSave = document.getElementById("importExport").value;
+  var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+  var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+  if (document.getElementById("importExport").value == ''){
+    alert("There is nothing to save!");
+  }
+  else{
+    var Filename= prompt("Choose a name for your xml file", "playground");
+    if (Filename == null) {
+    alert("You canceled the download!");
+      }
+      else {
+        if (Filename == '') {
+        alert("Please choose a name for your xml file!");
+        }
+        else{
+        var downloadLink = document.createElement("a");
+        downloadLink.download = Filename + ".xml";
+        downloadLink.innerHTML = "Download File";
+        downloadLink.href = textToSaveAsURL;
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+       }
+      }
+  }
+ }
+
+function uploadXml(){
+  var control = document.getElementById("import"); 
+    control.addEventListener("change", function(event){ 
+        var reader = new FileReader();      
+        reader.onload = function(event){
+            var contents = event.target.result;     
+            document.getElementById('importExport').value = contents;            
+        };      
+        reader.onerror = function(event){
+            console.error("File could not be read! Code " + event.target.error.code);
+        };      
+        console.log("Filename: " + control.files[0].name);
+        reader.readAsText(control.files[0]);        
+    }, false);
+}
+
+function uploadXmlToPlayground(){
+  if (document.getElementById("importExport").value == ''){
+    alert("Please select a file first");
+ }
+ else{
+  var input = document.getElementById('importExport');
+  if (!input.value) {
+    return;
+  }
+  var xml = Blockly.Xml.textToDom(input.value);
+  Blockly.Xml.domToWorkspace(xml, workspace);
+}
+}
+
+function clearPlayground(){
+  Blockly.mainWorkspace.clear();
+  document.getElementById("importExport").value = '';
+}
+
+function loadXmlBlocklyFile() {
+    // Create event listener function
+    var parseInputXMLfile = function (e) {
+        var files = e.target.files;
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            var success = loadBlocksfromXml(reader.result);
+        };
+        reader.readAsText(files[0]);
+        loadBlocksfromXml ();
+    };
+    // Create once invisible browse button with event listener, and click it
+    var selectFile = document.getElementById('select_file');
+    if (selectFile === null) {
+        var selectFileDom = document.createElement('INPUT');
+        selectFileDom.type = 'file';
+        selectFileDom.id = 'select_file';
+        selectFileDom.accept = '.bduino, .xml';
+        selectFileDom.style.display = 'none';
+        document.body.appendChild(selectFileDom);
+        selectFile = document.getElementById('select_file');
+        selectFile.addEventListener('change', parseInputXMLfile, false);
+    }
+    selectFile.click();
+
+};
+
+/**
+ * Parses the XML from its input to generate and replace the blocks in the
+ * Blockly workspace.
+ * @param {!string} defaultXml String of XML code for the blocks.
+ * @return {!boolean} Indicates if the XML into blocks parse was successful.
+ */
+ function loadBlocksfromXml(defaultXml) {
+    var xml = Blockly.Xml.textToDom(defaultXml);
+    Blockly.Xml.domToWorkspace(xml, workspace);
+};
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function dropdownFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  html, body {
+    height: 100%;
+  }
+  body {
+    background-color: #fff;
+    font-family: sans-serif;
+    overflow: hidden;
+  }
+  h1 {
+    font-weight: normal;
+    font-size: 140%;
+  }
+  #blocklyDiv {
+    float: right;
+    height: 95%;
+    width: 70%;
+  }
+  #importExport {
+    font-family: monospace;
+  }
+
+  .ioLabel>.blocklyFlyoutLabelText {
+    font-style: italic;
+  }
+
+  #blocklyDiv.renderingDebug .blockRenderDebug {
+    display: block;
+  }
+
+  .playgroundToggleOptions {
+    list-style: none;
+    padding: 0;
+  }
+  .playgroundToggleOptions li {
+    margin-top: 1em;
+  }
+
+  .blockRenderDebug {
+    display: none;
+  }
+
+  .zelos-renderer .blocklyFlyoutButton .blocklyText {
+    font-size: 1.5rem;
+  }
+  
+
+
+.dropbtn {
+  padding: 10px;
+  font-size: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  overflow: auto;
+
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+</head>
+<body onload="start()">
+  <div id="blocklyDiv"></div>
+
+  <h1>iModDom
+    <a href="https://github.com/ipleiria-robotics/iModDom" target="_blank">
+      <img src="../media/25231.png" style="width:42px;height:42px; vertical-align: middle;"></a>
+    <a href="https://www.uc.pt/en/org/inescc" target="_blank">
+      <img src="../media/inesc.png" style="width:42px;height:42px; vertical-align: middle;"></a>
+    <a href="https://www.ipleiria.pt/estg/" target="_blank">
+      <img src="../media/ipl.png" style="width:42px;height:42px; vertical-align: middle;"></a>
+    <a href="https://github.com/google/blockly" target="_blank">
+        <img src="../media/blockly_logo_built_on.png" style="width:120px;height:48px; vertical-align: middle;"></a>
+  </h1>
+  <p>
+    <button class="dropbtn" title="Download Playground" onclick="toXml()"><span class="material-icons">download</span></button>
+    <button class="dropbtn" title="Upload Playground" onclick="loadXmlBlocklyFile()"><span class="material-icons">file_upload</span></button>
+    <button class="dropbtn" title="Save Code to File" onclick="saveTextAsFile()"><span class="material-icons">save</span></button>
+    <button class="dropbtn" title="Convert To YAML" onclick="toCode('JavaScript')"><span class="material-icons">description</span></button>
+    <button class="dropbtn" title="Copy Code" onclick="copyText()"><span class="material-icons">content_copy</span></button>
+    <button class="dropbtn" title="Delete All" onclick="clearPlayground()"><span class="material-icons">delete</span></button>
+  </p>
+  <p>
+    <textarea id="importExport" style="width: 26%; height: 37em"></textarea>
+  </p>
+
+  <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <category name="Beginner" colour="#5ba55b">
+      <block type="beginner_binary_sensor">
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+        <field name="pin">5</field>
+        <field name="ssid">SSID</field>
+        <field name="wifi_password">wifi_password</field>
+        <field name="ota_password">OTA password</field>
+        <field name="api_password">API password</field>
+      </block>
+      <block type="beginner_light">
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+        <field name="pin">5</field>
+        <field name="ssid">SSID</field>
+        <field name="wifi_password">wifi_password</field>
+        <field name="ota_password">OTA password</field>
+        <field name="api_password">API password</field>
+      </block>
+      <block type="beginner_cover">
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+        <field name="open_pin">3</field>
+        <field name="close_pin">4</field>
+        <field name="stop_pin">5</field>
+        <field name="open_switch_pin">13</field>
+        <field name="close_switch_pin">14</field>
+        <field name="ssid">SSID</field>
+        <field name="wifi_password">wifi_password</field>
+        <field name="ota_password">OTA password</field>
+        <field name="api_password">API password</field>
+      </block>
+      <block type="beginner_dht">
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+        <field name="pin">5</field>
+        <field name="ssid">SSID</field>
+        <field name="wifi_password">wifi_password</field>
+        <field name="ota_password">OTA password</field>
+        <field name="api_password">API password</field>
+      </block>
+    </category>
+    <sep></sep>
+    <category name="Advanced"></category>
+    <category name="Base" colour="#9fa55b">
+      <block type="device">
+        <field name="name">name</field>
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+      </block>
+      <block type="wifi">
+        <field name="ssid">SSID</field>
+        <field name="password">wifi_password</field>
+      </block>
+      <block type="manual_ip">
+        <field name="ip_1">0</field>
+        <field name="ip_2">0</field>
+        <field name="ip_3">0</field>
+        <field name="ip_4">0</field>
+        <field name="gatew_1">0</field>
+        <field name="gatew_2">0</field>
+        <field name="gatew_3">0</field>
+        <field name="gatew_4">0</field>
+        <field name="subn_1">0</field>
+        <field name="subn_2">0</field>
+        <field name="subn_3">0</field>
+        <field name="subn_4">0</field>
+      </block>
+      <block type="ethernet">
+        <field name="type">LAN8720</field>
+        <field name="mdc_pin">23</field>
+        <field name="mdio_pin">18</field>
+        <field name="clk_mode">GPIO17_OUT</field>
+        <field name="power_pin">12</field>
+      </block>
+      <block type="api">
+        <field name="api_password">API password</field>
+      </block>
+      <block type="ota">
+        <field name="safe_mode">True</field>
+        <field name="password">insert your password</field>
+      </block>
+      <block type="logger">
+        <field name="level">NONE</field>
+      </block>
+      <block type="i2c">
+        <field name="sda_pin">13</field>
+        <field name="scl_pin">16</field>
+        <field name="scan">True</field>
+        <field name="id">i2c_bus</field>
+      </block>
+      <block type="web_server">
+        <field name="port">80</field>
+      </block>
+      <block type="pcf8574">
+        <field name="0x20">TRUE</field>
+        <field name="0x20_id">pcf8574_0x20</field>
+        <field name="0x21">FALSE</field>
+        <field name="0x21_id">pcf8574_0x21</field>
+        <field name="0x22">FALSE</field>
+        <field name="0x22_id">pcf8574_0x22</field>
+        <field name="0x23">FALSE</field>
+        <field name="0x23_id">pcf8574_0x23</field>
+        <field name="0x24">FALSE</field>
+        <field name="0x24_id">pcf8574_0x24</field>
+        <field name="0x25">FALSE</field>
+        <field name="0x25_id">pcf8574_0x25</field>
+        <field name="0x26">FALSE</field>
+        <field name="0x26_id">pcf8574_0x26</field>
+        <field name="0x27">FALSE</field>
+        <field name="0x27_id">pcf8574_0x27</field>
+      </block>
+    </category>
+    <category name="Sensor" colour="#a5745b">
+      <block type="binary_sensor"></block>
+      <block type="binary_sensor_component">
+        <field name="input_name">Input name</field>
+        <field name="binary_sensor_id">binary sensor id</field>
+        <field name="esp_pin">esp pin</field>
+        <field name="mode">INPUT</field>
+        <field name="inverted">True</field>
+      </block>
+      <block type="binary_sensor_pcf8574_component">
+        <field name="input_name">Input name</field>
+        <field name="binary_sensor_id">binary sensor id</field>
+        <field name="pcf8574_id">pcf8574 id</field>
+        <field name="pin_number">pin number</field>
+        <field name="inverted">True</field>
+      </block>
+      <block type="pir">
+        <field name="name">sensor name</field>
+        <field name="id">pir_id</field>
+        <field name="pin_number">esp pin</field>
+      </block>
+      <block type="pir_pcf8574">
+        <field name="name">sensor name</field>
+        <field name="id">pir_id</field>
+        <field name="pcf8574_id">pcf8574 id</field>
+        <field name="pin_number">pin number</field>
+      </block>
+      <block type="binary_sensor_automation"></block>
+      <block type="on_click_component">
+        <field name="min_length">0</field>
+        <field name="max_length">0</field>
+      </block>
+      <block type="on_double_click_component">
+        <field name="min_length">0</field>
+        <field name="max_length">0</field>
+      </block>
+      <block type="on_multi_click_component">
+        <field name="dc_on1">0</field>
+        <field name="dc_off1">0</field>
+        <field name="dc_on2">0</field>
+        <field name="dc_off2">0</field>
+        <field name="sl_on1">0</field>
+        <field name="sl_on2">0</field>
+        <field name="sl_off1">0</field>
+        <field name="ss_on1">0</field>
+        <field name="ss_on2">0</field>
+        <field name="ss_off1">0</field>
+      </block>
+      <block type="actions">
+        <field name="action_list">switch.toggle</field>
+        <field name="id">id</field>
+      </block>
+      <block type="can_bus_send_action">
+        <field name="can_bus_id">CAN bus id</field>
+        <field name="can_id">CAN id</field>
+        <field name="data">data to transmit</field>
+      </block>
+      <block type="sensor"></block>
+      <block type="dht">
+        <field name="pin_number">ESP pin</field>
+        <field name="temperature_name">livingroom temperature</field>
+        <field name="humidity_name">livingroom humidity</field>
+        <field name="update_interval">60</field>
+      </block>
+      <block type="si7021">
+        <field name="temperature_name">livingroom temperature</field>
+        <field name="humidity_name">livingroom humidity</field>
+        <field name="update_interval">60</field>
+      </block>
+      <block type="bmp280">
+        <field name="temperature_name">outside temperature</field>
+        <field name="pressure_name">outside pressure</field>
+        <field name="address">0x77</field>
+        <field name="update_interval">60</field>
+      </block>
+      <block type="mq_7">
+        <field name="pin_number">adc pin</field>
+        <field name="id">mq7_id</field>
+        <field name="update_interval">60</field>
+      </block>
+      <block type="template_sensor">
+        <field name="value_name">value name</field>
+        <field name="sensor_id">sensor id</field>
+        <field name="unit_of_measurement">ยบC</field>
+        <field name="device_class">temperature</field>
+        <field name="update_interval">60</field>
+      </block>
+    </category>
+    <category name="Switch" colour="#745ba5">
+      <block type="switch"></block>
+      <block type="switch_component">
+        <field name="switch_name">switch name</field>
+        <field name="esp_pin">esp pin</field>
+        <field name="inverted">true</field>
+        <field name="output_id">switch id</field>
+        <field name="interlock_check">TRUE</field>
+        <field name="interlock_name">interlock name</field>
+        <field name="output_id1">switch id</field>
+        <field name="output_id2">switch id</field>
+        <field name="restore_mode">TRUE</field>
+        <field name="restore_mode_list">always_off</field>
+      </block>
+      <block type="switch_pcf8574_component">
+        <field name="switch_name">switch name</field>
+        <field name="pcf8574_id">pcf8574 id</field>
+        <field name="pin_number">pin number</field>
+        <field name="inverted">true</field>
+        <field name="output_id">switch id</field>
+        <field name="interlock_check">TRUE</field>
+        <field name="interlock_name">interlock name</field>
+        <field name="output_id1">switch id</field>
+        <field name="output_id2">switch id</field>
+        <field name="restore_mode">TRUE</field>
+        <field name="restore_mode_list">always_off</field>
+      </block>
+      <block type="restart_switch_component">
+        <field name="switch_name">switch name</field>
+      </block>
+      <block type="shutdown_switch_component">
+        <field name="switch_name">switch name</field>
+      </block>
+    </category>
+    <category name="Output" colour="#a55b80">
+      <block type="output"></block>
+      <block type="output_component">
+        <field name="esp_pin">ESP pin</field>
+        <field name="inverted">true</field>
+        <field name="output_id">output id</field>
+      </block>
+      <block type="output_pcf8574_component">
+        <field name="pcf8574_id">pcf8574 id</field>
+        <field name="pin_number">pin number</field>
+        <field name="inverted">true</field>
+        <field name="output_id">output id</field>
+      </block>
+    </category>
+    <category name="Actuators" colour="#5ba58c">
+      <block type="light"></block>
+      <block type="light_component">
+        <field name="input_name">input name</field>
+        <field name="output_id">output id</field>
+        <field name="component_id">light id</field>
+        <field name="restore_mode">TRUE</field>
+        <field name="restore_mode_list">always off</field>
+      </block>
+      <block type="fan"></block>
+      <block type="binary_fan_component">
+        <field name="input_name">input name</field>
+        <field name="component_id">fan id</field>
+        <field name="output_id">output id</field>
+      </block>
+      <block type="cover"></block>
+      <block type="cover_component">
+        <field name="input_name">input name</field>
+        <field name="component_id">cover id</field>
+        <field name="open_duration">open duration</field>
+        <field name="close_duration">close duration</field>
+      </block>
+      <block type="endstop_cover_component">
+        <field name="input_name">input name</field>
+        <field name="component_id">cover id</field>
+        <field name="open_duration">open duration</field>
+        <field name="open_binary_sensor_id">binary sensor id</field>
+        <field name="close_duration">close duration</field>
+        <field name="close_binary_sensor_id">binary sensor id</field>
+      </block>
+      <block type="cover_actions">
+        <field name="action_list">switch.turn_on</field>
+        <field name="switch_id">switch id</field>
+      </block>
+    </category>
+    <category name="Communication" colour="#995ba5">
+      <block type="spi">
+        <field name="clck_pin">14</field>
+        <field name="mosi_pin">2</field>
+        <field name="miso_pin">15</field>
+        <field name="id">spi_bus</field>
+      </block>
+      <block type="can_bus">
+        <field name="id">CAN bus id</field>
+        <field name="can_id">CAN id</field>
+        <field name="extended_id">True</field>
+        <field name="cs_pin">5</field>
+        <field name="bit_rate">500KBPS</field>
+        <field name="clock">8MHZ</field>
+        <field name="mode">NORMAL</field>
+      </block>
+      <block type="can_bus_action">
+        <field name="can_id">CAN id</field>
+        <field name="action_list">switch.toggle</field>
+        <field name="id">id</field>
+      </block>
+    </category>
+  </xml>
+</body>
+</html>

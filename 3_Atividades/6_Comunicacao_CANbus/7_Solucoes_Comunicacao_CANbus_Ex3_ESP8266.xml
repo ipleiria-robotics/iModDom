@@ -1,0 +1,53 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="BEStD2C)7NovTF+%G;*h" x="88" y="38">
+    <field name="name">can_bus_send</field>
+    <field name="cpu">ESP8266</field>
+    <field name="board">d1_mini</field>
+    <field name="api_password">4321</field>
+    <next>
+      <block type="i2c" id="Mr~kivZkW?TFX,V/vOA$">
+        <field name="sda_pin">D2</field>
+        <field name="scl_pin">D1</field>
+        <field name="scan">True</field>
+        <field name="id">i2c_bus</field>
+        <next>
+          <block type="spi" id="671Ez|iK|vu%$xhq[bO!">
+            <field name="clck_pin">D5</field>
+            <field name="mosi_pin">D7</field>
+            <field name="miso_pin">D6</field>
+            <field name="id">spi_bus</field>
+            <next>
+              <block type="can_bus" id="p?2rLU@_9UNSzHEOzPq9">
+                <field name="id">can_bus</field>
+                <field name="can_id">0x0B</field>
+                <field name="extended_id">True</field>
+                <field name="cs_pin">D8</field>
+                <field name="bit_rate">500KBPS</field>
+                <field name="clock">8MHZ</field>
+                <field name="mode">NORMAL</field>
+                <next>
+                  <block type="sensor" id="s@Vg.fPe1}E|g~fhzW]R">
+                    <statement name="sensor_inputs">
+                      <block type="bmp280" id="fZ*=^~*m#h+].9#JASdK">
+                        <field name="temperature_name">Temperature</field>
+                        <field name="temperature_data">TRUE</field>
+                        <field name="temp_can_bus_id">can_bus</field>
+                        <field name="temp_can_id">500</field>
+                        <field name="pressure_name">Pressure</field>
+                        <field name="pressure_data">TRUE</field>
+                        <field name="press_can_bus_id">can_bus</field>
+                        <field name="press_can_id">501</field>
+                        <field name="address">0x77</field>
+                        <field name="update_interval">10</field>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

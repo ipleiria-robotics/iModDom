@@ -1,0 +1,75 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="BEStD2C)7NovTF+%G;*h" x="88" y="38">
+    <field name="name">can_bus_receive</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="/,x^w+PFrgB~Y@sm_)$R">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="5H-rlY56h0kw#1[jb}lR">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="spi" id="671Ez|iK|vu%$xhq[bO!">
+                <field name="clck_pin">14</field>
+                <field name="mosi_pin">2</field>
+                <field name="miso_pin">15</field>
+                <field name="id">spi_bus</field>
+                <next>
+                  <block type="can_bus" id="p?2rLU@_9UNSzHEOzPq9">
+                    <field name="id">can_bus</field>
+                    <field name="can_id">0x14</field>
+                    <field name="extended_id">True</field>
+                    <field name="cs_pin">5</field>
+                    <field name="bit_rate">500KBPS</field>
+                    <field name="clock">8MHZ</field>
+                    <field name="mode">NORMAL</field>
+                    <statement name="automations">
+                      <block type="can_bus_action" id="EA67l/J!19?vf(@WsOQ{">
+                        <field name="can_id">500</field>
+                        <field name="action_list">light.turn_on</field>
+                        <field name="id">light_1</field>
+                        <next>
+                          <block type="can_bus_action" id="@ns/+8o/(JciN!x.;AXm">
+                            <field name="can_id">501</field>
+                            <field name="action_list">light.turn_off</field>
+                            <field name="id">light_1</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="output" id="uXel#p(+5dU~N5v7~C8G">
+                        <statement name="output">
+                          <block type="output_component" id="SHc9}Ju%UMte/q/H5@pl">
+                            <field name="esp_pin">5</field>
+                            <field name="inverted">false</field>
+                            <field name="output_id">output_1</field>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="light" id="%n2h0C*E=8gs$H^/tlM=">
+                            <statement name="light">
+                              <block type="light_component" id="ZewMTkymLS[6|B=Nk1}8">
+                                <field name="input_name">Light</field>
+                                <field name="output_id">output_1</field>
+                                <field name="component_id">light_1</field>
+                                <field name="restore_mode">FALSE</field>
+                                <field name="restore_mode_list">always off</field>
+                              </block>
+                            </statement>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

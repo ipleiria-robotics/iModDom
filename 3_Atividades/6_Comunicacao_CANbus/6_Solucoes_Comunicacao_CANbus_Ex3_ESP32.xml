@@ -1,0 +1,73 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="BEStD2C)7NovTF+%G;*h" x="88" y="38">
+    <field name="name">can_bus_receive</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="/,x^w+PFrgB~Y@sm_)$R">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="J.ib?.Qr0aEKf`;)e1)Y">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="spi" id="671Ez|iK|vu%$xhq[bO!">
+                <field name="clck_pin">14</field>
+                <field name="mosi_pin">2</field>
+                <field name="miso_pin">15</field>
+                <field name="id">spi_bus</field>
+                <next>
+                  <block type="can_bus" id="p?2rLU@_9UNSzHEOzPq9">
+                    <field name="id">can_bus</field>
+                    <field name="can_id">0x14</field>
+                    <field name="extended_id">True</field>
+                    <field name="cs_pin">5</field>
+                    <field name="bit_rate">500KBPS</field>
+                    <field name="clock">8MHZ</field>
+                    <field name="mode">NORMAL</field>
+                    <statement name="automations">
+                      <block type="can_bus_action" id="EA67l/J!19?vf(@WsOQ{">
+                        <field name="can_id">500</field>
+                        <field name="action_list">receive_sensor_data</field>
+                        <field name="id">bmp280_temp</field>
+                        <next>
+                          <block type="can_bus_action" id="@ns/+8o/(JciN!x.;AXm">
+                            <field name="can_id">501</field>
+                            <field name="action_list">receive_sensor_data</field>
+                            <field name="id">bmp280_press</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="sensor" id="m9on|h@xEiZ$`U3*rcE2">
+                        <statement name="sensor_inputs">
+                          <block type="template_sensor" id="0}$!a1FGyPVzuZW%KIP9">
+                            <field name="value_name">Temperature</field>
+                            <field name="sensor_id">bmp280_temp</field>
+                            <field name="unit_of_measurement">ºC</field>
+                            <field name="device_class">temperature</field>
+                            <field name="update_interval">10</field>
+                            <next>
+                              <block type="template_sensor" id="hX=lK_8;V$=z]`YR+rx4">
+                                <field name="value_name">Pressure</field>
+                                <field name="sensor_id">bmp280_press</field>
+                                <field name="unit_of_measurement">hPa</field>
+                                <field name="device_class">pressure</field>
+                                <field name="update_interval">10</field>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

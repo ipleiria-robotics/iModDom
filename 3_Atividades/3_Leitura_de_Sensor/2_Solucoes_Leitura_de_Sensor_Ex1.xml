@@ -1,0 +1,36 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="pYJF0=b+7#-N1S_FY-u[" x="113" y="38">
+    <field name="name">dht</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="K?qy=yGSZ-H|KHaK3qh/">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="u|Y],*;e4ZLs]Q`g0TDI">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="sensor" id="/RA|X0?pn!{e(,8mgmx[">
+                <statement name="sensor_inputs">
+                  <block type="dht" id=":0j^)Kc;0[PFeL;abg6o">
+                    <field name="pin_number">5</field>
+                    <field name="temperature_name">livingroom temperature</field>
+                    <field name="temperature_data">FALSE</field>
+                    <field name="temp_can_bus_id">CAN bus id</field>
+                    <field name="temp_can_id">CAN id</field>
+                    <field name="humidity_name">livingroom humidity</field>
+                    <field name="humidity_data">FALSE</field>
+                    <field name="hum_can_bus_id">CAN bus id</field>
+                    <field name="hum_can_id">CAN id</field>
+                    <field name="update_interval">10</field>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

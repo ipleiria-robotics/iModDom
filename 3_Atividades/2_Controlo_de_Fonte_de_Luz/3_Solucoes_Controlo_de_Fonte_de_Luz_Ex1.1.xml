@@ -1,0 +1,71 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="pYJF0=b+7#-N1S_FY-u[" x="113" y="38">
+    <field name="name">light_control</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="K?qy=yGSZ-H|KHaK3qh/">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="oWeW1J;Q}k}Fv`eW}qqJ">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="output" id="a6EidnZ@lNtXw~h|b7_e">
+                <statement name="output">
+                  <block type="output_component" id="E-r6l_y$+;MJH@+0o7F#">
+                    <field name="esp_pin">5</field>
+                    <field name="inverted">false</field>
+                    <field name="output_id">output_1</field>
+                  </block>
+                </statement>
+                <next>
+                  <block type="light" id="lKN32YD+TZ2dD@`afR9l">
+                    <statement name="light">
+                      <block type="light_component" id="#bQP,WyCo.i%^k3n=g0L">
+                        <field name="input_name">Light</field>
+                        <field name="output_id">output_1</field>
+                        <field name="component_id">light_1</field>
+                        <field name="restore_mode">FALSE</field>
+                        <field name="restore_mode_list">always off</field>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="binary_sensor" id="Juj?!i5tsoHwd]L4Dodm">
+                        <statement name="binary_sensor">
+                          <block type="binary_sensor_component" id="dv7~{LVKokOqq02QRxVF">
+                            <field name="input_name">Binary Sensor</field>
+                            <field name="binary_sensor_id">binary_sensor1</field>
+                            <field name="esp_pin">4</field>
+                            <field name="mode">INPUT_PULLUP</field>
+                            <field name="inverted">True</field>
+                            <value name="automation_field">
+                              <block type="binary_sensor_automation" id="1B+=dV,i07$~L#`pw;Pb">
+                                <statement name="automation_field_on_press">
+                                  <block type="actions" id="[!,5uKbznauHYC@`EdU3">
+                                    <field name="action_list">light.turn_on</field>
+                                    <field name="id">light_1</field>
+                                  </block>
+                                </statement>
+                                <statement name="automation_field_on_release">
+                                  <block type="actions" id="yxzFNFY20`7!GEzM78._">
+                                    <field name="action_list">light.turn_off</field>
+                                    <field name="id">light_1</field>
+                                  </block>
+                                </statement>
+                              </block>
+                            </value>
+                          </block>
+                        </statement>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

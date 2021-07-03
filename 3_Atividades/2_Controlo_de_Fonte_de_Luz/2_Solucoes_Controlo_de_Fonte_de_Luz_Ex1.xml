@@ -1,0 +1,42 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="pYJF0=b+7#-N1S_FY-u[" x="113" y="38">
+    <field name="name">light_control</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="K?qy=yGSZ-H|KHaK3qh/">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="}4B#u+Aw{iRgp#v+Wk@]">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="output" id="a6EidnZ@lNtXw~h|b7_e">
+                <statement name="output">
+                  <block type="output_component" id="E-r6l_y$+;MJH@+0o7F#">
+                    <field name="esp_pin">5</field>
+                    <field name="inverted">false</field>
+                    <field name="output_id">output_1</field>
+                  </block>
+                </statement>
+                <next>
+                  <block type="light" id="lKN32YD+TZ2dD@`afR9l">
+                    <statement name="light">
+                      <block type="light_component" id="#bQP,WyCo.i%^k3n=g0L">
+                        <field name="input_name">Light</field>
+                        <field name="output_id">output_1</field>
+                        <field name="component_id">light_1</field>
+                        <field name="restore_mode">FALSE</field>
+                        <field name="restore_mode_list">always off</field>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

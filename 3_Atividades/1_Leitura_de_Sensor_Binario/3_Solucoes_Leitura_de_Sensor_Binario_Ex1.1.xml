@@ -1,0 +1,49 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="xZcFt@[R(-*o(cFulZ-c" x="163" y="63">
+    <field name="name">binary_sensor</field>
+    <field name="cpu">ESP32</field>
+    <field name="board">esp32-poe-iso</field>
+    <next>
+      <block type="wifi" id="`/(okXAHV0p*nGqB{CRi">
+        <field name="ssid">&lt;my wifi&gt;</field>
+        <field name="password">&lt;password&gt;</field>
+        <next>
+          <block type="api" id="C^Gj^+Xb!vC19*4LP7xW">
+            <field name="api_password">4321</field>
+            <next>
+              <block type="binary_sensor" id="$hMByz~gBv]WapQ)m{^9">
+                <statement name="binary_sensor">
+                  <block type="binary_sensor_component" id="ate46xzR%#*=#l914?8M">
+                    <field name="input_name">Binary Sensor</field>
+                    <field name="binary_sensor_id">binary_sensor1</field>
+                    <field name="esp_pin">5</field>
+                    <field name="mode">INPUT</field>
+                    <field name="inverted">True</field>
+                  </block>
+                </statement>
+                <next>
+                  <block type="switch" id="on(IeQ*25W7a[2DY;6X]">
+                    <statement name="switch_inputs">
+                      <block type="switch_component" id="UopLC9~.llZw3$xk(3G1">
+                        <field name="switch_name">Switch</field>
+                        <field name="esp_pin">4</field>
+                        <field name="inverted">false</field>
+                        <field name="output_id">switch_1</field>
+                        <field name="interlock_check">FALSE</field>
+                        <field name="interlock_name">interlock name</field>
+                        <field name="output_id1">switch id</field>
+                        <field name="output_id2">switch id</field>
+                        <field name="restore_mode">FALSE</field>
+                        <field name="restore_mode_list">always_off</field>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

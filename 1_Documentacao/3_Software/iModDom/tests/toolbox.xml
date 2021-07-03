@@ -1,0 +1,308 @@
+  <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <category name="Beginner" colour="#5ba55b">
+      <block type="beginner_binary_sensor">
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+        <field name="pin">5</field>
+        <field name="ssid">SSID</field>
+        <field name="wifi_password">wifi_password</field>
+        <field name="ota_password">OTA password</field>
+        <field name="api_password">API password</field>
+      </block>
+      <block type="beginner_light">
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+        <field name="pin">5</field>
+        <field name="ssid">SSID</field>
+        <field name="wifi_password">wifi_password</field>
+        <field name="ota_password">OTA password</field>
+        <field name="api_password">API password</field>
+      </block>
+      <block type="beginner_cover">
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+        <field name="open_pin">3</field>
+        <field name="close_pin">4</field>
+        <field name="stop_pin">5</field>
+        <field name="open_switch_pin">13</field>
+        <field name="close_switch_pin">14</field>
+        <field name="ssid">SSID</field>
+        <field name="wifi_password">wifi_password</field>
+        <field name="ota_password">OTA password</field>
+        <field name="api_password">API password</field>
+      </block>
+      <block type="beginner_dht">
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+        <field name="pin">5</field>
+        <field name="ssid">SSID</field>
+        <field name="wifi_password">wifi_password</field>
+        <field name="ota_password">OTA password</field>
+        <field name="api_password">API password</field>
+      </block>
+    </category>
+    <sep></sep>
+    <category name="Advanced"></category>
+    <category name="Base" colour="#9fa55b">
+      <block type="device">
+        <field name="name">name</field>
+        <field name="cpu">ESP32</field>
+        <field name="board">esp32-poe-iso</field>
+      </block>
+      <block type="wifi">
+        <field name="ssid">SSID</field>
+        <field name="password">wifi_password</field>
+      </block>
+      <block type="manual_ip">
+        <field name="ip_1">0</field>
+        <field name="ip_2">0</field>
+        <field name="ip_3">0</field>
+        <field name="ip_4">0</field>
+        <field name="gatew_1">0</field>
+        <field name="gatew_2">0</field>
+        <field name="gatew_3">0</field>
+        <field name="gatew_4">0</field>
+        <field name="subn_1">0</field>
+        <field name="subn_2">0</field>
+        <field name="subn_3">0</field>
+        <field name="subn_4">0</field>
+      </block>
+      <block type="ethernet">
+        <field name="type">LAN8720</field>
+        <field name="mdc_pin">23</field>
+        <field name="mdio_pin">18</field>
+        <field name="clk_mode">GPIO17_OUT</field>
+        <field name="power_pin">12</field>
+      </block>
+      <block type="api">
+        <field name="api_password">API password</field>
+      </block>
+      <block type="ota">
+        <field name="safe_mode">True</field>
+        <field name="password">insert your password</field>
+      </block>
+      <block type="logger">
+        <field name="level">NONE</field>
+      </block>
+      <block type="i2c">
+        <field name="sda_pin">13</field>
+        <field name="scl_pin">16</field>
+        <field name="scan">True</field>
+        <field name="id">i2c_bus</field>
+      </block>
+      <block type="web_server">
+        <field name="port">80</field>
+      </block>
+      <block type="pcf8574">
+        <field name="0x20">TRUE</field>
+        <field name="0x20_id">pcf8574_0x20</field>
+        <field name="0x21">FALSE</field>
+        <field name="0x21_id">pcf8574_0x21</field>
+        <field name="0x22">FALSE</field>
+        <field name="0x22_id">pcf8574_0x22</field>
+        <field name="0x23">FALSE</field>
+        <field name="0x23_id">pcf8574_0x23</field>
+        <field name="0x24">FALSE</field>
+        <field name="0x24_id">pcf8574_0x24</field>
+        <field name="0x25">FALSE</field>
+        <field name="0x25_id">pcf8574_0x25</field>
+        <field name="0x26">FALSE</field>
+        <field name="0x26_id">pcf8574_0x26</field>
+        <field name="0x27">FALSE</field>
+        <field name="0x27_id">pcf8574_0x27</field>
+      </block>
+    </category>
+    <category name="Sensor" colour="#a5745b">
+      <block type="binary_sensor"></block>
+      <block type="binary_sensor_component">
+        <field name="input_name">Input name</field>
+        <field name="binary_sensor_id">binary sensor id</field>
+        <field name="esp_pin">esp pin</field>
+        <field name="mode">INPUT</field>
+        <field name="inverted">True</field>
+      </block>
+      <block type="binary_sensor_pcf8574_component">
+        <field name="input_name">Input name</field>
+        <field name="binary_sensor_id">binary sensor id</field>
+        <field name="pcf8574_id">pcf8574 id</field>
+        <field name="pin_number">pin number</field>
+        <field name="inverted">True</field>
+      </block>
+      <block type="pir">
+        <field name="name">sensor name</field>
+        <field name="id">pir_id</field>
+        <field name="pin_number">esp pin</field>
+      </block>
+      <block type="pir_pcf8574">
+        <field name="name">sensor name</field>
+        <field name="id">pir_id</field>
+        <field name="pcf8574_id">pcf8574 id</field>
+        <field name="pin_number">pin number</field>
+      </block>
+      <block type="binary_sensor_automation"></block>
+      <block type="on_click_component">
+        <field name="min_length">0</field>
+        <field name="max_length">0</field>
+      </block>
+      <block type="on_double_click_component">
+        <field name="min_length">0</field>
+        <field name="max_length">0</field>
+      </block>
+      <block type="on_multi_click_component">
+        <field name="dc_on1">0</field>
+        <field name="dc_off1">0</field>
+        <field name="dc_on2">0</field>
+        <field name="dc_off2">0</field>
+        <field name="sl_on1">0</field>
+        <field name="sl_on2">0</field>
+        <field name="sl_off1">0</field>
+        <field name="ss_on1">0</field>
+        <field name="ss_on2">0</field>
+        <field name="ss_off1">0</field>
+      </block>
+      <block type="actions">
+        <field name="action_list">switch.toggle</field>
+        <field name="id">id</field>
+      </block>
+      <block type="can_bus_send_action">
+        <field name="can_bus_id">CAN bus id</field>
+        <field name="can_id">CAN id</field>
+        <field name="data">data to transmit</field>
+      </block>
+      <block type="sensor"></block>
+      <block type="dht">
+        <field name="pin_number">ESP pin</field>
+        <field name="temperature_name">livingroom temperature</field>
+        <field name="humidity_name">livingroom humidity</field>
+        <field name="update_interval">60</field>
+      </block>
+      <block type="si7021">
+        <field name="temperature_name">livingroom temperature</field>
+        <field name="humidity_name">livingroom humidity</field>
+        <field name="update_interval">60</field>
+      </block>
+      <block type="bmp280">
+        <field name="temperature_name">outside temperature</field>
+        <field name="pressure_name">outside pressure</field>
+        <field name="address">0x77</field>
+        <field name="update_interval">60</field>
+      </block>
+      <block type="mq_7">
+        <field name="pin_number">adc pin</field>
+        <field name="id">mq7_id</field>
+        <field name="update_interval">60</field>
+      </block>
+      <block type="template_sensor">
+        <field name="value_name">value name</field>
+        <field name="sensor_id">sensor id</field>
+        <field name="unit_of_measurement">ยบC</field>
+        <field name="device_class">temperature</field>
+        <field name="update_interval">60</field>
+      </block>
+    </category>
+    <category name="Switch" colour="#745ba5">
+      <block type="switch"></block>
+      <block type="switch_component">
+        <field name="switch_name">switch name</field>
+        <field name="esp_pin">esp pin</field>
+        <field name="inverted">false</field>
+        <field name="output_id">switch id</field>
+        <field name="interlock_check">TRUE</field>
+        <field name="interlock_name">interlock name</field>
+        <field name="output_id1">switch id</field>
+        <field name="output_id2">switch id</field>
+        <field name="restore_mode">TRUE</field>
+        <field name="restore_mode_list">always_off</field>
+      </block>
+      <block type="switch_pcf8574_component">
+        <field name="switch_name">switch name</field>
+        <field name="pcf8574_id">pcf8574 id</field>
+        <field name="pin_number">pin number</field>
+        <field name="inverted">false</field>
+        <field name="output_id">switch id</field>
+        <field name="interlock_check">TRUE</field>
+        <field name="interlock_name">interlock name</field>
+        <field name="output_id1">switch id</field>
+        <field name="output_id2">switch id</field>
+        <field name="restore_mode">TRUE</field>
+        <field name="restore_mode_list">always_off</field>
+      </block>
+      <block type="restart_switch_component">
+        <field name="switch_name">switch name</field>
+      </block>
+      <block type="shutdown_switch_component">
+        <field name="switch_name">switch name</field>
+      </block>
+    </category>
+    <category name="Output" colour="#a55b80">
+      <block type="output"></block>
+      <block type="output_component">
+        <field name="esp_pin">ESP pin</field>
+        <field name="inverted">true</field>
+        <field name="output_id">output id</field>
+      </block>
+      <block type="output_pcf8574_component">
+        <field name="pcf8574_id">pcf8574 id</field>
+        <field name="pin_number">pin number</field>
+        <field name="inverted">true</field>
+        <field name="output_id">output id</field>
+      </block>
+    </category>
+    <category name="Actuators" colour="#5ba58c">
+      <block type="light"></block>
+      <block type="light_component">
+        <field name="input_name">input name</field>
+        <field name="output_id">output id</field>
+        <field name="component_id">light id</field>
+        <field name="restore_mode">TRUE</field>
+        <field name="restore_mode_list">always off</field>
+      </block>
+      <block type="fan"></block>
+      <block type="binary_fan_component">
+        <field name="input_name">input name</field>
+        <field name="component_id">fan id</field>
+        <field name="output_id">output id</field>
+      </block>
+      <block type="cover"></block>
+      <block type="cover_component">
+        <field name="input_name">input name</field>
+        <field name="component_id">cover id</field>
+        <field name="open_duration">open duration</field>
+        <field name="close_duration">close duration</field>
+      </block>
+      <block type="endstop_cover_component">
+        <field name="input_name">input name</field>
+        <field name="component_id">cover id</field>
+        <field name="open_duration">open duration</field>
+        <field name="open_binary_sensor_id">binary sensor id</field>
+        <field name="close_duration">close duration</field>
+        <field name="close_binary_sensor_id">binary sensor id</field>
+      </block>
+      <block type="cover_actions">
+        <field name="action_list">switch.turn_on</field>
+        <field name="switch_id">switch id</field>
+      </block>
+    </category>
+    <category name="Communication" colour="#995ba5">
+      <block type="spi">
+        <field name="clck_pin">14</field>
+        <field name="mosi_pin">2</field>
+        <field name="miso_pin">15</field>
+        <field name="id">spi_bus</field>
+      </block>
+      <block type="can_bus">
+        <field name="id">CAN bus id</field>
+        <field name="can_id">CAN id</field>
+        <field name="extended_id">True</field>
+        <field name="cs_pin">5</field>
+        <field name="bit_rate">500KBPS</field>
+        <field name="clock">8MHZ</field>
+        <field name="mode">NORMAL</field>
+      </block>
+      <block type="can_bus_action">
+        <field name="can_id">CAN id</field>
+        <field name="action_list">switch.toggle</field>
+        <field name="id">id</field>
+      </block>
+    </category>
+  </xml>

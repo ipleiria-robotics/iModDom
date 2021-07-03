@@ -1,0 +1,109 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="device" id="BEStD2C)7NovTF+%G;*h" x="88" y="38">
+    <field name="name">can_bus_send</field>
+    <field name="cpu">ESP8266</field>
+    <field name="board">d1_mini</field>
+    <field name="api_password">4321</field>
+    <next>
+      <block type="spi" id="671Ez|iK|vu%$xhq[bO!">
+        <field name="clck_pin">D5</field>
+        <field name="mosi_pin">D7</field>
+        <field name="miso_pin">D6</field>
+        <field name="id">spi_bus</field>
+        <next>
+          <block type="can_bus" id="p?2rLU@_9UNSzHEOzPq9">
+            <field name="id">can_bus</field>
+            <field name="can_id">0x0B</field>
+            <field name="extended_id">True</field>
+            <field name="cs_pin">D8</field>
+            <field name="bit_rate">500KBPS</field>
+            <field name="clock">8MHZ</field>
+            <field name="mode">NORMAL</field>
+            <next>
+              <block type="binary_sensor" id="%laz-52wW45.NIg~R?uj">
+                <statement name="binary_sensor">
+                  <block type="binary_sensor_component" id="C/4jeP3.f7Afk}qN}Z$X">
+                    <field name="input_name">Cover Open</field>
+                    <field name="binary_sensor_id">cover_open</field>
+                    <field name="esp_pin">D0</field>
+                    <field name="mode">INPUT_PULLUP</field>
+                    <field name="inverted">True</field>
+                    <value name="automation_field">
+                      <block type="binary_sensor_automation" id="%-)b?kA$89a%`|C);][X">
+                        <statement name="automation_field_on_click">
+                          <block type="on_click_component" id="ypS?mn8cF8pXeO(Txg/e">
+                            <field name="min_length">0</field>
+                            <field name="max_length">0.5</field>
+                            <statement name="on_click_action">
+                              <block type="can_bus_send_action" id="-g;$)tKXkGTUnW6RIK{5">
+                                <field name="can_bus_id">can_bus</field>
+                                <field name="can_id">500</field>
+                                <field name="data">[0x10]</field>
+                              </block>
+                            </statement>
+                          </block>
+                        </statement>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="binary_sensor_component" id="hG67H!Bag_wR][~UDrpu">
+                        <field name="input_name">Cover Stop</field>
+                        <field name="binary_sensor_id">cover_stop</field>
+                        <field name="esp_pin">D1</field>
+                        <field name="mode">INPUT_PULLUP</field>
+                        <field name="inverted">True</field>
+                        <value name="automation_field">
+                          <block type="binary_sensor_automation" id="mM@#Gb=.f9s3SG^/2EP*">
+                            <statement name="automation_field_on_click">
+                              <block type="on_click_component" id="GaXi?h2l:ecrghq,Cs}y">
+                                <field name="min_length">0</field>
+                                <field name="max_length">0.5</field>
+                                <statement name="on_click_action">
+                                  <block type="can_bus_send_action" id="-8as,^WF+=9%p:FsUY-N">
+                                    <field name="can_bus_id">can_bus</field>
+                                    <field name="can_id">501</field>
+                                    <field name="data">[0x11]</field>
+                                  </block>
+                                </statement>
+                              </block>
+                            </statement>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="binary_sensor_component" id="t=%k{d.ruhR!PvrV6D/L">
+                            <field name="input_name">Cover Close</field>
+                            <field name="binary_sensor_id">cover_close</field>
+                            <field name="esp_pin">D2</field>
+                            <field name="mode">INPUT_PULLUP</field>
+                            <field name="inverted">True</field>
+                            <value name="automation_field">
+                              <block type="binary_sensor_automation" id="@=(Js(]6jDfc|]Va8O21">
+                                <statement name="automation_field_on_click">
+                                  <block type="on_click_component" id="5WV[Gm`mI=~Wm$-^PasL">
+                                    <field name="min_length">0</field>
+                                    <field name="max_length">0.5</field>
+                                    <statement name="on_click_action">
+                                      <block type="can_bus_send_action" id="{x{^(FO]{P}B/AzBeE88">
+                                        <field name="can_bus_id">can_bus</field>
+                                        <field name="can_id">502</field>
+                                        <field name="data">[0x12]</field>
+                                      </block>
+                                    </statement>
+                                  </block>
+                                </statement>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>
