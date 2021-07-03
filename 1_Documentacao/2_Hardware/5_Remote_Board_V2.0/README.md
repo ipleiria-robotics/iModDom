@@ -3,7 +3,7 @@
 - Esta versão está finalizada, no entanto, à presente data não foi fabricada nem testada, pelo que a sua utilização fica à responsabilidade do utilizador.
 - Esta versão conta com as seguintes melhorias:
 
-    1.Melhoria a nível do legendamento dos componentes, com realce na legenda da ficha RJ45.
+    1.Melhoria a nível do legendamento dos componentes, com realce na legenda da porta RJ45.
     
     2.*Solder jumper* em alternativa à resistência.
 
