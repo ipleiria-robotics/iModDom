@@ -15,7 +15,7 @@ O projeto foi desenvolvido com o intuito e objetivo de ser uma solução económ
 - Faça as atividades propostas para ficar apto a criar as suas próprias aplicações para domótica.
 
 ## Ajuda
-Se estiver com problemas, pode reportá-los [aqui](https://github.com/MarcoPereira00/aiModDom/issues "aqui").
+Se estiver com problemas, pode reportá-los [aqui](https://github.com/ipleiria-robotics/iModDom/issues "aqui").
 
 ## Contribuições 
-Estamos abertos a sugestões com a finalidade de melhorar o projeto, pode colocá-las em forma de [pull request](https://github.com/MarcoPereira00/aiModDom/pulls "pull request") ou relatando os erros detetados.
+Estamos abertos a sugestões com a finalidade de melhorar o projeto, pode colocá-las em forma de [pull request](https://github.com/ipleiria-robotics/iModDom/pulls "pull request") ou relatando os erros detetados.
