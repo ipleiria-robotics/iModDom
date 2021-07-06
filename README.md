@@ -19,3 +19,10 @@ Se estiver com problemas, pode reportá-los [aqui](https://github.com/ipleiria-r
 
 ## Contribuições 
 Estamos abertos a sugestões com a finalidade de melhorar o projeto, pode colocá-las em forma de [pull request](https://github.com/ipleiria-robotics/iModDom/pulls "pull request") ou relatando os erros detetados.
+
+# Autores
+ - Marco Pereira - estudante do [Politécnico de Leiria](https://www.ipleiria.pt) do curso TeSP em Automação, Robótica e manutenção Industrial [MarcoPereira00](https://github.com/MarcoPereira00)
+
+## Orientado por:
+- Luís Conde - [Politécnico de Leiria](https://www.ipleiria.pt), GitHub:  [Luís Conde](https://github.com/conde-ISR-UC-PT)
+- Carlos Neves - [Politécnico de Leiria](https://www.ipleiria.pt), [INESC-Coimbra](http://inescc.estg.ipleiria.pt/) GitHub:  [Carlos Neves](https://github.com/carlos-neves)
